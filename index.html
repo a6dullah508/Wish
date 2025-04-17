@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday, Esha!</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2280%22>❤️</text></svg>">
+  <style>
+    /* Global Styles */
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      height: 100%;
+      font-family: 'Arial', sans-serif;
+      background: radial-gradient(circle at center, #0c0212, #000);
+      color: #fff;
+      scroll-behavior: smooth;
+    }
+    body {
+      transition: background 0.5s ease;
+    }
+    
+    /* Slide Container Styles */
+    .slide {
+      display: none;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      text-align: center;
+      box-sizing: border-box;
+      animation: fadeIn 1s forwards;
+    }
+    .active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    /* Headings & Paragraphs: Larger Font */
+    h1 {
+      font-size: 3em;
+      margin-bottom: 0.5em;
+      letter-spacing: 2px;
+    }
+    p {
+      font-size: 1.3em;
+      margin: 0 auto 1em;
+      max-width: 600px;
+      line-height: 1.5em;
+    }
+
+    /* Navigation Buttons */
+    .nav-btn {
+      position: absolute;
+      bottom: 30px;
+      background: rgba(255, 255, 255, 0.3);
+      border: none;
+      padding: 15px 25px;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: background 0.3s ease;
+    }
+    .nav-btn:hover {
+      background: rgba(255, 255, 255, 0.5);
+    }
+    #prevBtn {
+      left: 20px;
+    }
+    #nextBtn {
+      right: 20px;
+    }
+    
+    /* Starry Background */
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: twinkle 2s infinite alternate;
+    }
+    @keyframes twinkle {
+      0% { opacity: 0.2; }
+      100% { opacity: 1; }
+    }
+    
+    /* Floating Hearts */
+    .heart {
+      position: absolute;
+      color: #ff69b4;
+      font-size: 20px;
+      opacity: 0.8;
+      animation: floatUp 6s linear infinite;
+    }
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0px);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-150px);
+        opacity: 0;
+      }
+    }
+
+    /* Optional Audio Toggle Button */
+    #musicToggle {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(255,255,255,0.3);
+      border: none;
+      padding: 8px 16px;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background 0.3s ease;
+      z-index: 1;
+    }
+    #musicToggle:hover {
+      background: rgba(255,255,255,0.5);
+    }
+
+    /* Specific Slide Content Styles */
+    #slide1, #slide2, #slide3, #slide4, #slide5 {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 0 10%;
+    }
+
+    /* Style for Esha's Image on Slide 2 */
+    #eshaPhoto {
+      max-width: 300px;
+      width: 80%;
+      height: 400px;
+      object-fit: cover;
+      border: 3px solid #fff;
+      border-radius: 8px;
+      margin-top: 20px;
+      box-shadow: 0 0 15px rgba(255,255,255,0.3);
+      animation: fadeInImage 1.5s ease forwards;
+      z-index: 1;
+      position: relative;
+    }
+    @keyframes fadeInImage {
+      from { opacity: 0; transform: scale(0.8); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    /* Canvas for confetti on the final slide */
+    #confettiCanvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 999;
+    }
+
+    @media only screen and (max-width: 768px) {
+      h1 {
+        font-size: 2em;
+      }
+
+      p {
+        font-size: 1.1em;
+        padding: 0 10px;
+      }
+
+      .nav-btn {
+        font-size: 14px;
+        padding: 10px 18px;
+      }
+
+      #eshaPhoto {
+        height: auto;
+        max-height: 300px;
+        width: 90%;
+      }
+
+      #musicToggle {
+        font-size: 14px;
+        padding: 6px 12px;
+      }
+    }
+
+  </style>
+  <!-- jQuery from CDN -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <!-- Optional Background Music -->
+  <audio id="backgroundMusic" loop>
+    <source src="assests/song.mp3" type="audio/mp3">
+    Your browser does not support the audio element.
+  </audio>
+  <button id="musicToggle">Play Music 🎵</button>
+  
+  <!-- Slide 1: Magical Welcome -->
+  <div id="slide1" class="slide active">
+    <h1>Beloved, Esha! 💖</h1>
+    <p>Just wanted to start by saying how much you mean to me. You really do make everything feel better.</p>
+  </div>
+
+  <!-- Slide 2: Esha’s Photo -->
+  <div id="slide2" class="slide">
+    <h1>A Beautiful Soul 🌟</h1>
+    <p>Every time I see you (mtlb roz 😌) I can’t help but smile and feel special. You’re honestly the most beautiful person to me.</p>
+    <img id="eshaPhoto" src="assests/esha.jpg" alt="Esha's Photo">
+  </div>
+  
+  <!-- Slide 3: Poetic Affection -->
+  <div id="slide3" class="slide">
+    <h1>My Special One 🌼</h1>
+    <p>Being with you feels so special and precious. Even the simple moments become my favorite when I’m with you.</p>
+  </div>
+  
+  <!-- Slide 4: Our Journey -->
+  <div id="slide4" class="slide">
+    <h1>Ussss 🤝</h1>
+    <p>We've shared so many moments, good and bad but I’m glad it was with you as every moment with you was magical. Seeing you happy is my greatest joy. Ap khush me khush 🥰 </p>
+  </div>
+  
+  <!-- Slide 5: Happy Birthday & Confetti -->
+  <div id="slide5" class="slide">
+    <h1>Happy Birthday My Love! 🥳</h1>
+    <p>You deserve all the joy this world can give you and I’ll spend my life making sure you feel it. Lucky to have you my side.</p>
+    <p>I LOVE YOU SOOOOOO MUCHHHHH 💖😘</p>
+    <!-- Canvas for confetti animation -->
+    <canvas id="confettiCanvas"></canvas>
+  </div>
+
+  <!-- Navigation Buttons -->
+  <button id="prevBtn" class="nav-btn">Prev</button>
+  <button id="nextBtn" class="nav-btn">Next</button>
+
+  <!-- JavaScript for Interactivity and Effects -->
+  <script>
+    $(document).ready(function() {
+      var currentSlide = 1;
+      var totalSlides = 5;
+
+      // Initial Slide
+      showSlide(currentSlide);
+
+      // Navigation Buttons
+      $("#nextBtn").click(function() {
+        if(currentSlide < totalSlides) {
+          currentSlide++;
+          showSlide(currentSlide);
+          if(currentSlide === totalSlides) {
+            launchConfetti();
+          }
+        }
+      });
+      $("#prevBtn").click(function() {
+        if(currentSlide > 1) {
+          currentSlide--;
+          showSlide(currentSlide);
+        }
+      });
+
+      // Arrow Keys Navigation
+      $(document).keydown(function(e) {
+        if(e.keyCode === 39) { // Right Arrow
+          $("#nextBtn").click();
+        } else if(e.keyCode === 37) { // Left Arrow
+          $("#prevBtn").click();
+        }
+      });
+
+      // Slide Switching Function
+      function showSlide(n) {
+        $(".slide").removeClass("active").fadeOut(300);
+        $("#slide" + n).fadeIn(500).addClass("active");
+      }
+
+      // Create Stars
+      var numStars = 150;
+      for (var i = 0; i < numStars; i++) {
+        var star = $("<div class='star'></div>");
+        var x = Math.random() * $(window).width();
+        var y = Math.random() * $(window).height();
+        var size = Math.random() * 2;
+        var duration = 2 + Math.random() * 3;
+        star.css({
+          left: x + "px",
+          top: y + "px",
+          width: (size + 1) + "px",
+          height: (size + 1) + "px",
+          animationDuration: duration + "s"
+        });
+        $("body").append(star);
+      }
+
+      // Create Floating Hearts
+      var numHearts = 50;
+      for (var j = 0; j < numHearts; j++) {
+        var heart = $("<div class='heart'>♥</div>");
+        var xPos = Math.random() * $(window).width();
+        var yPos = Math.random() * $(window).height();
+        var delay = Math.random() * 5;
+        heart.css({
+          left: xPos + "px",
+          top: yPos + "px",
+          animationDelay: delay + "s"
+        });
+        $("body").append(heart);
+      }
+
+      // Audio Debugging: Add Event Listeners to Check for Errors
+      var audio = document.getElementById("backgroundMusic");
+      audio.addEventListener('error', function(e) {
+        console.error("Audio error:", e, "Error Code:", audio.error ? audio.error.code : "No error code");
+      });
+      audio.addEventListener('canplaythrough', function() {
+        console.log("Audio loaded and ready to play");
+      });
+
+      // Background Music Control
+      var musicPlaying = false;
+      $("#musicToggle").click(function() {
+        if (musicPlaying) {
+          audio.pause();
+          $("#musicToggle").text("Play Music 🎵");
+          musicPlaying = false;
+        } else {
+          audio.play().then(function() {
+            $("#musicToggle").text("Pause Music 🎵");
+            musicPlaying = true;
+            console.log("Music playing");
+          }).catch(function(error) {
+            console.error("Playback error:", error);
+          });
+        }
+      });
+
+      // Resize Confetti Canvas
+      function resizeCanvas() {
+        var canvas = document.getElementById("confettiCanvas");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      $(window).resize(function() {
+        resizeCanvas();
+      });
+      resizeCanvas();
+
+      // Confetti Animation on Last Slide
+      function launchConfetti() {
+        var canvas = document.getElementById("confettiCanvas");
+        var ctx = canvas.getContext("2d");
+        var confettiPieces = [];
+        var colors = ["#ffeb3b", "#ff69b4", "#adff2f", "#1e90ff", "#ffa500", "#ff4500"];
+
+        // Create confetti pieces
+        for (var i = 0; i < 200; i++) {
+          confettiPieces.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height - canvas.height,
+            r: Math.random() * 6 + 2,
+            d: Math.random() * 150 + 10,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            tilt: Math.floor(Math.random() * 10) - 10,
+            tiltAngleIncremental: (Math.random() * 0.07) + 0.05,
+            tiltAngle: 0
+          });
+        }
+
+        var angle = 0;
+        var duration = 10000; // 10 seconds
+        var start = Date.now();
+
+        (function animloop() {
+          var now = Date.now();
+          if (now - start < duration) {
+            requestAnimationFrame(animloop);
+          }
+          drawConfetti();
+        })();
+
+        function drawConfetti() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          for (var i = 0; i < confettiPieces.length; i++) {
+            var p = confettiPieces[i];
+            ctx.beginPath();
+            ctx.lineWidth = p.r;
+            ctx.strokeStyle = p.color;
+            ctx.moveTo(p.x + p.tilt + p.r / 2, p.y);
+            ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r / 2);
+            ctx.stroke();
+          }
+          updateConfetti();
+        }
+
+        function updateConfetti() {
+          angle += 0.01;
+          for (var i = 0; i < confettiPieces.length; i++) {
+            var p = confettiPieces[i];
+            p.tiltAngle += p.tiltAngleIncremental;
+            p.y += (Math.cos(angle + p.d) + 1 + p.r / 2) / 2;
+            p.x += Math.sin(angle);
+            p.tilt = Math.sin(p.tiltAngle) * 15;
+
+            // Reset if out of screen
+            if (p.y > canvas.height) {
+              confettiPieces[i] = {
+                x: Math.random() * canvas.width,
+                y: -20,
+                r: p.r,
+                d: p.d,
+                color: p.color,
+                tilt: p.tilt,
+                tiltAngleIncremental: p.tiltAngleIncremental,
+                tiltAngle: p.tiltAngle
+              };
+            }
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
